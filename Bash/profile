@@ -1,0 +1,75 @@
+export PATH=/usr/local/bin:/usr/local/sbin:/Users/yyjim/bin:$PATH
+export GEM_EDITOR=mate
+
+# github for gitReview script
+export GITHUB_LOGIN=
+export GITHUB_PASSWORD=
+
+# crashlytics
+export CRASHLYTICS_API_TOKEN=
+export CRASHLYTICS_BUILD_SECRET=
+
+# aws
+export AWS_ACCESS_KEY_ID=
+export AWS_SECRET_ACCESS_KEY=
+export S3_ACCESS_KEY=
+export S3_SECRET_ACCESS_KEY=
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+# Finished adapting your PATH environment variable for use with MacPorts.
+
+# Aliases
+alias run_elasticsearch='elasticsearch --config=/usr/local/opt/elasticsearch/config/elasticsearch.yml'
+alias mongodb_start='mongod run --config /usr/local/Cellar/mongodb/2.0.2-x86_64/mongod.conf'
+alias mobile_atlas='java -Xms64m -Xmx512M -jar Mobile_Atlas_Creator.jar'
+alias jenkins='java -jar /usr/local/opt/jenkins/libexec/jenkins.war'
+alias pod_push_cblue='pod repo push cblue --use-libraries --allow-warnings'
+alias pod_push_cblue_no_libraries='pod repo push cblue --allow-warnings'
+alias piccollage='cd ~/CB/iOS/pic-collage-ios'
+alias pttp='cd ~/Workspace/PTTPlus/PTTPlus-IOS'          
+alias fix_xccomment='sudo /usr/libexec/xpccachectl'
+
+export CLICOLOR=1
+
+function git_branch {
+  git symbolic-ref HEAD 2> /dev/null | sed 's/refs\/heads\/\(.*\)/\1/'
+}
+function git_prompt {
+ git=$(git_branch)
+ if test $git; then
+   echo " $git>" 
+ else
+   echo ''
+ fi
+}
+
+export PS1='\[\e[0;31m\]\w\$$(git_prompt)\[\e[m\] '
+  
+if [ -f `brew --prefix`/etc/bash_completion ]; then
+    . `brew --prefix`/etc/bash_completion
+fi
+
+if [ -f ~/.git-completion.bash ]; then
+  . ~/.git-completion.bash
+fi
+
+
+openx() { 
+  if test -n "$(find . -maxdepth 1 -name '*.xcworkspace' -print -quit)"
+  then
+    echo "Opening workspace"
+    open *.xcworkspace
+    return
+  else
+    if test -n "$(find . -maxdepth 1 -name '*.xcodeproj' -print -quit)"
+    then
+      echo "Opening project"
+      open *.xcodeproj
+      return  
+    else
+      echo "Nothing found"
+    fi
+  fi
+}
