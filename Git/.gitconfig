@@ -1,0 +1,33 @@
+[user]
+	name = yyjim
+	email = yy.jim731@gmail.com
+
+coal = !git branch -r | egrep '^[^>]+$' | sed -E 's/(.+)\\/(.+)/git branch \\2 --track\\1\\/\\2/' | ruby -e 'puts $stdin.read.split(\"\n\").map{ |s| send(:`, s) }.reject(&:empty?)' 2> /dev/null
+
+# https://git.wiki.kernel.org/index.php/Aliases
+[alias]
+	master = checkout master
+	dev = checkout dev
+	co = checkout
+	ci = commit
+	st = status
+	br = branch
+	undo = reset --hard
+  rmall = !git status | grep 'deleted:' | sed -E 's/.*\\deleted: +//' | xargs git rm
+  dry = "!f() { grep -q 'changed in both' <<< $(git merge-tree $(git merge-base HEAD $1) $1 HEAD) && echo 'Merge conflict detected' || echo 'Merged cleanly'; }; f"
+  pushtag = push --tag
+  last = "!git show --format='%H' | head -n1"
+  rmtag = !sh -c 'git push $1 ":refs/tags/$2"' - # - The final dash is so that arguments start with $1, not with $0.
+  qtag = "!git tag $1 | git push --tag origin"
+
+[color]
+	  branch = auto
+	  diff = auto
+	  interactive = auto
+	  status = auto
+	  ui = true
+	 
+[heroku]
+	remote = staging
+[credential]
+	helper = osxkeychain
